@@ -6,14 +6,13 @@ public class World {
     public static void main(String[] args) {
         System.out.println("system wystartował");
 
-        run(args);
+        MoveDirection[] dirs = OptionsParser.convertToDir(args);
+        run(dirs);
 
         System.out.println("system zakończył działanie");
     }
 
-    private static void run(String[] directions) {
-        MoveDirection[] dirs = OptionsParser.convertToDir(directions);
-
+    private static void run(MoveDirection[] dirs) {
         for (MoveDirection dir : dirs) {
             switch (dir) {
                 case FORWARD -> System.out.println("zwierzak idzie do przodu");
