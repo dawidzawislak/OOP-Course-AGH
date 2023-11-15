@@ -16,7 +16,12 @@ public class Animal {
 
     @Override
     public String toString() {
-        return String.format("Położenie zwierzaka: %s, orientacja: %s", position, orientation);
+        return switch(orientation) {
+            case NORTH -> "^";
+            case SOUTH -> "v";
+            case EAST -> ">";
+            case WEST -> "<";
+        };
     }
 
     public boolean isAt(Vector2d position) {
@@ -35,6 +40,19 @@ public class Animal {
         if (newPosition != position)
             if (0 <= newPosition.getX() && newPosition.getX() <= 4 && 0 <= newPosition.getY() && newPosition.getY() <= 4)
                 position = newPosition;
+    }
+
+    public void move(MoveDirection direction, MoveValidator moveValidator) {
+        Vector2d newPosition = position;
+        switch (direction) {
+            case RIGHT -> orientation = orientation.next();
+            case LEFT -> orientation = orientation.previous();
+            case FORWARD -> newPosition = position.add(orientation.toUnitVector());
+            case BACKWARD -> newPosition = position.add(orientation.toUnitVector().opposite());
+        }
+
+        if (newPosition != position && moveValidator.canMoveTo(newPosition))
+            position = newPosition;
     }
 
     public Vector2d getPosition() {

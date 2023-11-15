@@ -3,6 +3,7 @@ package agh.ics.oop;
 import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
+import agh.ics.oop.model.WorldMap;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -12,13 +13,17 @@ public class Simulation {
     private final List<Animal> animals;
     private final List<MoveDirection> moves;
 
-    public Simulation(List<Vector2d> positions, List<MoveDirection> moves) {
+    private final WorldMap worldMap;
+
+    public Simulation(List<Vector2d> positions, List<MoveDirection> moves, WorldMap worldMap) {
         animals = new ArrayList<>();
 
         for(Vector2d pos : positions) {
-            animals.add(new Animal(pos));
+            Animal animal = new Animal(pos);
+            if (worldMap.place(animal))
+                animals.add(animal);
         }
-
+        this.worldMap = worldMap;
         this.moves = moves;
     }
 
@@ -28,9 +33,9 @@ public class Simulation {
         for (MoveDirection move : moves) {
             Animal animal = animals.get(animalIndex);
 
-            animal.move(move);
+            worldMap.move(animal, move);
 
-            System.out.printf("Zwierzę %d: %s%n", animalIndex, animal.getPosition());
+            System.out.println(worldMap);
 
             animalIndex = (animalIndex + 1) % animalCount;
         }
