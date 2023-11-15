@@ -3,11 +3,12 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class OptionsParser {
-    public static MoveDirection[] convertToDir(String[] directions) {
-        ArrayList<MoveDirection> dirs = new ArrayList<MoveDirection>();
+    public static List<MoveDirection> convertToDir(String[] directions) {
+        List<MoveDirection> dirs = new LinkedList<>();
 
         for (String dir : directions) {
             switch (dir) {
@@ -17,6 +18,6 @@ public class OptionsParser {
                 case "l" -> dirs.add(MoveDirection.LEFT);
             }
         }
-        return dirs.toArray(new MoveDirection[0]);
+        return dirs;
     }
 }

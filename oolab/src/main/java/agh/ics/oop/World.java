@@ -1,19 +1,25 @@
 package agh.ics.oop;
 
+import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
+
+import java.util.List;
 
 public class World {
     public static void main(String[] args) {
         System.out.println("system wystartował");
 
-        run(args);
+        List<MoveDirection> directions = OptionsParser.convertToDir(args);
+        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
+        Simulation simulation = new Simulation(positions, directions);
+        simulation.run();
 
         System.out.println("system zakończył działanie");
     }
 
     private static void run(String[] directions) {
-        MoveDirection[] dirs = OptionsParser.convertToDir(directions);
+        List<MoveDirection> dirs = OptionsParser.convertToDir(directions);
 
         for (MoveDirection dir : dirs) {
             switch (dir) {
