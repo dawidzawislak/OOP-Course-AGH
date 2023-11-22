@@ -31,6 +31,7 @@ public class Simulation {
         int animalIndex = 0;
         int animalCount = animals.size();
         for (MoveDirection move : moves) {
+            if (animalIndex > animalCount - 1) break;
             Animal animal = animals.get(animalIndex);
 
             worldMap.move(animal, move);
@@ -39,5 +40,10 @@ public class Simulation {
 
             animalIndex = (animalIndex + 1) % animalCount;
         }
+    }
+
+    @Override
+    public String toString() {
+        return worldMap.toString();
     }
 }
