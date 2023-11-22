@@ -1,8 +1,10 @@
 package agh.ics.oop.model;
 
 import agh.ics.oop.OptionsParser;
+import agh.ics.oop.Simulation;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,6 +38,58 @@ public class MapIntegrationTest {
     }
 
     @Test
+    public void canAnimalBePlacedOnTopOfOtherAnimalSimulationVersion() {
+        List<Vector2d> positions = new ArrayList<>();
+        List<MoveDirection> moves = new ArrayList<>();
+        RectangularMap map = new RectangularMap(5, 5);
+        positions.add(new Vector2d(0, 0));
+        positions.add(new Vector2d(0, 0));
+        positions.add(new Vector2d(0, 0));
+        positions.add(new Vector2d(0, 5));
+        moves.add(MoveDirection.FORWARD);
+        moves.add(MoveDirection.BACKWARD);
+        moves.add(MoveDirection.FORWARD);
+        Simulation simulation = new Simulation(positions, moves, map);
+        simulation.run();
+        String ExpectedMap = """
+                 y\\x  0 1 2 3 4 5\r
+                  6: -------------\r
+                  5: | | | | | | |\r
+                  4: |^| | | | | |\r
+                  3: | | | | | | |\r
+                  2: |^| | | | | |\r
+                  1: | | | | | | |\r
+                  0: | | | | | | |\r
+                 -1: -------------\r
+                """;
+        assertEquals(ExpectedMap, simulation.toString());
+    }
+
+    @Test
+    public void isSimulationWorkingWithoutAnimals() {
+        List<Vector2d> positions = new ArrayList<>();
+        List<MoveDirection> moves = new ArrayList<>();
+        RectangularMap map = new RectangularMap(5, 5);
+        moves.add(MoveDirection.FORWARD);
+        moves.add(MoveDirection.BACKWARD);
+        moves.add(MoveDirection.FORWARD);
+        Simulation simulation = new Simulation(positions, moves, map);
+        simulation.run();
+        String ExpectedMap = """
+                 y\\x  0 1 2 3 4 5\r
+                  6: -------------\r
+                  5: | | | | | | |\r
+                  4: | | | | | | |\r
+                  3: | | | | | | |\r
+                  2: | | | | | | |\r
+                  1: | | | | | | |\r
+                  0: | | | | | | |\r
+                 -1: -------------\r
+                """;
+        assertEquals(simulation.toString(), ExpectedMap);
+    }
+
+    @Test
     public void canAnimalWalkIntoAnotherAnimal() {
         RectangularMap map = new RectangularMap(4, 4);
         Animal animal1 = new Animal(new Vector2d(2, 2));
@@ -65,6 +119,34 @@ public class MapIntegrationTest {
     }
 
     @Test
+    void isAnimalWalkingOutOfMapSimulationVersion() {
+        List<Vector2d> positions = new ArrayList<>();
+        List<MoveDirection> moves = new ArrayList<>();
+        RectangularMap map = new RectangularMap(4, 4);
+        positions.add(new Vector2d(2, 2));
+
+        moves.add(MoveDirection.FORWARD);
+        moves.add(MoveDirection.FORWARD);
+        moves.add(MoveDirection.FORWARD);
+        moves.add(MoveDirection.FORWARD);
+
+        Simulation simulation = new Simulation(positions, moves, map);
+        simulation.run();
+
+        String ExpectedMap = """
+                y\\x  0 1 2 3 4\r
+                 5: -----------\r
+                 4: | | |^| | |\r
+                 3: | | | | | |\r
+                 2: | | | | | |\r
+                 1: | | | | | |\r
+                 0: | | | | | |\r
+                -1: -----------\r
+               """;
+        assertEquals(ExpectedMap, simulation.toString());
+    }
+
+    @Test
     public void integrationTest() {
         RectangularMap map = new RectangularMap(4, 4);
         Animal animal = new Animal(new Vector2d(4, 2));
@@ -79,5 +161,4 @@ public class MapIntegrationTest {
 
         assertTrue(animal.isAt(result));
     }
-
 }
