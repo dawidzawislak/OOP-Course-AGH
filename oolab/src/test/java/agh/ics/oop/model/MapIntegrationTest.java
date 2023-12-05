@@ -30,7 +30,7 @@ public class MapIntegrationTest {
         boolean res1 = map.place(animal1);
         boolean res2 = map.place(animal2);
 
-        Animal placedAnimal = map.objectAt(new Vector2d(2, 2));
+        WorldElement placedAnimal = map.objectAt(new Vector2d(2, 2));
 
         assertTrue(res1);
         assertFalse(res2);
