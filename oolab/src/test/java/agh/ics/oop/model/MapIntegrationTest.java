@@ -2,6 +2,7 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
+import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,7 +17,15 @@ public class MapIntegrationTest {
         RectangularMap map = new RectangularMap(4, 4);
         Animal animal = new Animal(new Vector2d(5, 5));
 
-        boolean res = map.place(animal);
+        boolean res = true;
+
+        try {
+            map.place(animal);
+        }
+        catch(PositionAlreadyOccupiedException e) {
+            System.out.println(e.getMessage());
+            res = false;
+        }
 
         assertFalse(res);
     }
@@ -27,8 +36,24 @@ public class MapIntegrationTest {
         Animal animal1 = new Animal(new Vector2d(2, 2));
         Animal animal2 = new Animal(new Vector2d(2, 2));
 
-        boolean res1 = map.place(animal1);
-        boolean res2 = map.place(animal2);
+        boolean res1 = true;
+        boolean res2 = true;
+
+        try {
+            map.place(animal1);
+        }
+        catch(PositionAlreadyOccupiedException e) {
+            System.out.println(e.getMessage());
+            res1 = false;
+        }
+
+        try {
+            map.place(animal2);
+        }
+        catch(PositionAlreadyOccupiedException e) {
+            System.out.println(e.getMessage());
+            res2 = false;
+        }
 
         WorldElement placedAnimal = map.objectAt(new Vector2d(2, 2));
 
@@ -95,10 +120,14 @@ public class MapIntegrationTest {
         Animal animal1 = new Animal(new Vector2d(2, 2));
         Animal animal2 = new Animal(new Vector2d(2, 3));
 
-        map.place(animal1);
-        map.place(animal2);
-
-        map.move(animal1, MoveDirection.FORWARD);
+        try {
+            map.place(animal1);
+            map.place(animal2);
+            map.move(animal1, MoveDirection.FORWARD);
+        }
+        catch(PositionAlreadyOccupiedException e) {
+            System.out.println(e.getMessage());
+        }
 
         assertEquals(new Vector2d(2, 2), animal1.getPosition());
     }
@@ -108,11 +137,16 @@ public class MapIntegrationTest {
         RectangularMap map = new RectangularMap(4, 4);
         Animal animal = new Animal(new Vector2d(2, 2));
 
-        map.place(animal);
-        map.move(animal, MoveDirection.FORWARD);
-        map.move(animal, MoveDirection.FORWARD);
-        map.move(animal, MoveDirection.FORWARD);
-        map.move(animal, MoveDirection.FORWARD);
+        try {
+            map.place(animal);
+            map.move(animal, MoveDirection.FORWARD);
+            map.move(animal, MoveDirection.FORWARD);
+            map.move(animal, MoveDirection.FORWARD);
+            map.move(animal, MoveDirection.FORWARD);
+        }
+        catch(PositionAlreadyOccupiedException e) {
+            System.out.println(e.getMessage());
+        }
 
         assertEquals(animal, map.objectAt(new Vector2d(2, 4)));
         assertEquals(new Vector2d(2, 4), animal.getPosition());

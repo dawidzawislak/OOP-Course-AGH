@@ -8,10 +8,20 @@ public class World {
     public static void main(String[] args) {
         System.out.println("system wystartował");
 
-        List<MoveDirection> directions = OptionsParser.convertToDir(args);
+        List<MoveDirection> directions;
+        try {
+            directions = OptionsParser.convertToDir(args);
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        //Simulation simulation = new Simulation(positions, directions, new RectangularMap(10,10));
-        Simulation simulation = new Simulation(positions, directions, new GrassField(10));
+        GrassField grassField = new GrassField(10);
+        grassField.addListener(new ConsoleMapDisplay());
+        RectangularMap rectangularMap = new RectangularMap(10, 10);
+        rectangularMap.addListener(new ConsoleMapDisplay());
+        Simulation simulation = new Simulation(positions, directions, grassField);
         simulation.run();
 
         System.out.println("system zakończył działanie");

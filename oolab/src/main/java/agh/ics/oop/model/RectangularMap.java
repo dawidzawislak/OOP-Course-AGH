@@ -23,18 +23,13 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
     @Override
-    protected Vector2d getRightUp() {
-        return rightUp;
-    }
-
-    @Override
-    protected Vector2d getLeftDown() {
-        return leftDown;
+    public Boundary getCurrentBounds() {
+        return new Boundary(leftDown, rightUp);
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return (0 <= position.getX() && position.getX() <= getRightUp().getX() && 0 <= position.getY() && position.getY() <= getRightUp().getY()) && !animals.containsKey(position);
+        return (0 <= position.getX() && position.getX() <= rightUp.getX() && 0 <= position.getY() && position.getY() <= rightUp.getY()) && !animals.containsKey(position);
     }
 
     @Override

@@ -25,25 +25,20 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    protected Vector2d getRightUp() {
+    public Boundary getCurrentBounds() {
         Vector2d rightUp = new Vector2d(1, 1);
 
         for (WorldElement we : getElements()) {
             rightUp = we.getPosition().upperRight(rightUp);
         }
 
-        return rightUp.add(new Vector2d(1, 1));
-    }
-
-    @Override
-    protected Vector2d getLeftDown() {
         Vector2d leftDown = new Vector2d(1, 1);
 
         for (WorldElement we : getElements()) {
             leftDown = we.getPosition().lowerLeft(leftDown);
         }
 
-        return leftDown.add(new Vector2d(-1, -1));
+        return new Boundary(leftDown.add(new Vector2d(-1, -1)), rightUp.add(new Vector2d(1, 1)));
     }
 
     @Override

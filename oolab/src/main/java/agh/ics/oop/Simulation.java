@@ -4,6 +4,7 @@ import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.WorldMap;
+import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,8 +21,13 @@ public class Simulation {
 
         for(Vector2d pos : positions) {
             Animal animal = new Animal(pos);
-            if (worldMap.place(animal))
+            try {
+                worldMap.place(animal);
                 animals.add(animal);
+            }
+            catch(PositionAlreadyOccupiedException e) {
+                System.out.println(e.getMessage());
+            }
         }
         this.worldMap = worldMap;
         this.moves = moves;
@@ -34,9 +40,14 @@ public class Simulation {
             if (animalIndex > animalCount - 1) break;
             Animal animal = animals.get(animalIndex);
 
-            worldMap.move(animal, move);
+            try {
+                worldMap.move(animal, move);
+            }
+            catch (PositionAlreadyOccupiedException e) {
+                System.out.println(e.getMessage());
+            }
 
-            System.out.println(worldMap);
+            //System.out.println(worldMap);
 
             animalIndex = (animalIndex + 1) % animalCount;
         }

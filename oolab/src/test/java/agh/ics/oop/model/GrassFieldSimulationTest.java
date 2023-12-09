@@ -17,7 +17,7 @@ public class GrassFieldSimulationTest {
 
         Simulation simulation = new Simulation(positions,moves,new GrassField(20));
         simulation.run();
-        String x= simulation.toString();
+
         int result=0;
         for(char c : simulation.toString().toCharArray()) {
             if(c=='*') result++;
@@ -59,7 +59,7 @@ public class GrassFieldSimulationTest {
         Simulation simulation = new Simulation(positions, moves, map);
         simulation.run();
 
-        assertEquals(new Vector2d(21,16), map.getRightUp());
+        assertEquals(new Vector2d(21,16), map.getCurrentBounds().upperRight());
     }
     @Test
     public void isMapExtendingProperlyWhenAnimalMoving() {
@@ -78,7 +78,7 @@ public class GrassFieldSimulationTest {
 
         simulation.run();
 
-        assertEquals(new Vector2d(19,17), map.getRightUp());
+        assertEquals(new Vector2d(19,17), map.getCurrentBounds().upperRight());
     }
     @Test
     public void isMapShrinkingProperly() {
@@ -94,7 +94,7 @@ public class GrassFieldSimulationTest {
 
         simulation.run();
 
-        assertEquals(new Vector2d(19,16), map.getRightUp());
+        assertEquals(new Vector2d(19,16), map.getCurrentBounds().upperRight());
     }
     @Test
     public void placingMultipleAnimalsOnSamePosition() {
