@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Simulation {
+public class Simulation implements Runnable {
     private final List<Animal> animals;
     private final List<MoveDirection> moves;
 
@@ -46,8 +46,6 @@ public class Simulation {
             catch (PositionAlreadyOccupiedException e) {
                 System.out.println(e.getMessage());
             }
-
-            //System.out.println(worldMap);
 
             animalIndex = (animalIndex + 1) % animalCount;
         }

@@ -11,10 +11,13 @@ public class ConsoleMapDisplay implements MapChangeListener {
 
     @Override
     public void mapChanged(WorldMap worldMap, String message) {
-        countOfOperations++;
-        System.out.println("----------------------------------------------------------------");
-        System.out.println(message);
-        System.out.println(worldMap);
-        System.out.println("Operations count: " + countOfOperations);
+        synchronized (System.out) {
+            countOfOperations++;
+            System.out.println("----------------------------------------------------------------");
+            System.out.println("ID: " + worldMap.getId());
+            System.out.println(message + "\n");
+            System.out.println(worldMap);
+            System.out.println("Operations count: " + countOfOperations);
+        }
     }
 }

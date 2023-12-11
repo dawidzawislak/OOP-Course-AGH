@@ -3,9 +3,12 @@ package agh.ics.oop.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class GrassField extends AbstractWorldMap {
     private final HashMap<Vector2d, Grass> grass;
+
+    static private int idCounter = 0;
 
     public GrassField(int grassCount) {
         super();
@@ -16,6 +19,8 @@ public class GrassField extends AbstractWorldMap {
         for(Vector2d grassPosition : randomPositionGenerator) {
             grass.put(grassPosition, new Grass(grassPosition));
         }
+        id = "GrassField#" + idCounter;
+        idCounter++;
     }
 
     @Override

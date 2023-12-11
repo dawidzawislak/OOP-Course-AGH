@@ -6,12 +6,15 @@ import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final HashMap<Vector2d, Animal> animals;
 
     protected final List<MapChangeListener> listeners;
     private final MapVisualizer mapVisualizer;
+
+    protected String id;
 
     public AbstractWorldMap() {
         animals = new HashMap<>();
@@ -59,5 +62,10 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public String toString() {
         return mapVisualizer.draw(getCurrentBounds().lowerLeft(), getCurrentBounds().upperRight());
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 }

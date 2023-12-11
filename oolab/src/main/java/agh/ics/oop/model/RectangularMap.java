@@ -11,10 +11,16 @@ public class RectangularMap extends AbstractWorldMap {
 
     private final Vector2d leftDown;
     private final Vector2d rightUp;
+
+    static private int idCounter = 0;
+
     public RectangularMap(int width, int height) {
         super();
         leftDown = new Vector2d(0, 0);
         rightUp = new Vector2d(width, height);
+
+        id = "RectangularMap#" + idCounter;
+        idCounter++;
     }
 
     @Override

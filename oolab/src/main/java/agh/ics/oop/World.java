@@ -2,10 +2,12 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class World {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println("system wystartował");
 
         List<MoveDirection> directions;
@@ -21,9 +23,26 @@ public class World {
         grassField.addListener(new ConsoleMapDisplay());
         RectangularMap rectangularMap = new RectangularMap(10, 10);
         rectangularMap.addListener(new ConsoleMapDisplay());
-        Simulation simulation = new Simulation(positions, directions, grassField);
-        simulation.run();
+        Simulation simulation1 = new Simulation(positions, directions, rectangularMap);
+        Simulation simulation2 = new Simulation(positions, directions, grassField);
+        SimulationEngine simulationEngine = new SimulationEngine(List.of(simulation1, simulation2));
+        simulationEngine.runAsyncInThreadPool();
 
+        // Race condition testing code
+        /*
+        List<Simulation> simulations = new LinkedList<>();
+
+        for (int i = 0; i < 10000; i++) {
+            GrassField gf = new GrassField(10);
+            gf.addListener(new ConsoleMapDisplay());
+            RectangularMap rm = new RectangularMap(10, 10);
+            rm.addListener(new ConsoleMapDisplay());
+            simulations.add(new Simulation(positions, directions, rm));
+            simulations.add(new Simulation(positions, directions, gf));
+        }
+        SimulationEngine simulationEngine = new SimulationEngine(simulations);
+        simulationEngine.runAsyncInThreadPool();
+        */
         System.out.println("system zakończył działanie");
     }
 
