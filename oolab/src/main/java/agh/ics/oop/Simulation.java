@@ -48,6 +48,11 @@ public class Simulation implements Runnable {
             }
 
             animalIndex = (animalIndex + 1) % animalCount;
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

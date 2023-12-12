@@ -30,7 +30,7 @@ public class SimulationEngine {
             threads.add(new Thread(simulation));
             threads.get(threads.size()-1).start();
         }
-        awaitSimulationsEnd();
+        //awaitSimulationsEnd();
     }
 
     public void awaitSimulationsEnd() {
@@ -54,6 +54,6 @@ public class SimulationEngine {
         for (Simulation simulation : simulations) {
             threadPool.submit(simulation);
         }
-        awaitSimulationsEnd();
+        //awaitSimulationsEnd();
     }
 }

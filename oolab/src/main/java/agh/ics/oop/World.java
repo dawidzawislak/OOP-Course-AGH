@@ -1,6 +1,7 @@
 package agh.ics.oop;
 
 import agh.ics.oop.model.*;
+import javafx.application.Application;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -27,6 +28,7 @@ public class World {
         Simulation simulation2 = new Simulation(positions, directions, grassField);
         SimulationEngine simulationEngine = new SimulationEngine(List.of(simulation1, simulation2));
         simulationEngine.runAsyncInThreadPool();
+
 
         // Race condition testing code
         /*
