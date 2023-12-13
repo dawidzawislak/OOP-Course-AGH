@@ -36,15 +36,22 @@
       <Label layoutX="14.0" layoutY="23.0" text="Moves:">
          <padding>
             <Insets left="15.0" right="15.0" />
-         </padding></Label>
-      <TextField fx:id="movesTBox" layoutX="61.0" layoutY="19.0" prefHeight="25.0" prefWidth="620.0">
+         </padding>
+         <HBox.margin>
+            <Insets top="5.0" />
+         </HBox.margin></Label>
+      <TextField fx:id="movesTBox" layoutX="61.0" layoutY="19.0" prefHeight="26.0" prefWidth="468.0">
          <padding>
             <Insets right="15.0" />
          </padding>
-      </TextField>
-      <Button layoutX="714.0" layoutY="19.0" mnemonicParsing="false" onAction="#onSimulationStartClicked" prefHeight="25.0" prefWidth="72.0" text="Start">
          <HBox.margin>
-            <Insets left="20.0" />
+            <Insets right="15.0" />
+         </HBox.margin>
+      </TextField>
+      <Button fx:id="newSimBtn" mnemonicParsing="false" onAction="#onNewSimulationClicked" prefHeight="26.0" prefWidth="142.0" text="Start in new window" />
+      <Button fx:id="startBtn" layoutX="714.0" layoutY="19.0" mnemonicParsing="false" onAction="#onSimulationStartClicked" prefHeight="25.0" prefWidth="72.0" text="Start">
+         <HBox.margin>
+            <Insets left="15.0" />
          </HBox.margin></Button>
    </HBox>
 </VBox>

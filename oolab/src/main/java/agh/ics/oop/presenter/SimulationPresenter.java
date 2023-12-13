@@ -2,17 +2,21 @@ package agh.ics.oop.presenter;
 
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
+import agh.ics.oop.SimulationApp;
 import agh.ics.oop.SimulationEngine;
 import agh.ics.oop.model.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -112,5 +116,12 @@ public class SimulationPresenter implements MapChangeListener {
         Simulation simulation = new Simulation(positions, directions, grassField);
         SimulationEngine simulationEngine = new SimulationEngine(List.of(simulation));
         simulationEngine.runAsync();
+    }
+
+    public void onNewSimulationClicked(ActionEvent actionEvent) {
+        SimulationApp app = new SimulationApp();
+        app.setArgs(movesTBox.getText());
+        Thread appThread = new Thread(app);
+        app.run();
     }
 }

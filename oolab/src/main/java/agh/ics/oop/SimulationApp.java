@@ -1,22 +1,31 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.*;
-import agh.ics.oop.presenter.SimulationPresenter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Objects;
 
-public class SimulationApp extends Application {
+public class SimulationApp extends Application implements Runnable {
+    String args = "";
+
     private void configureStage(Stage primaryStage, VBox viewRoot) {
         var scene = new Scene(viewRoot);
+        if (!Objects.equals(args, "")) {
+            TextField movesTBox = (TextField) scene.lookup("#movesTBox");
+            movesTBox.setText(args);
+            Button startBtn = (Button) scene.lookup("#startBtn");
+            startBtn.fire();
+            Button newSimBtn = (Button) scene.lookup("#newSimBtn");
+            startBtn.setVisible(false);
+            newSimBtn.setVisible(false);
+            movesTBox.setDisable(true);
+        }
         primaryStage.setScene(scene);
         primaryStage.setTitle("Simulation app");
         primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
@@ -38,5 +47,14 @@ public class SimulationApp extends Application {
         configureStage(primaryStage, viewRoot);
 
         primaryStage.show();
+    }
+
+    @Override
+    public void run() {
+        start(new Stage());
+    }
+
+    public void setArgs(String args) {
+        this.args = args;
     }
 }

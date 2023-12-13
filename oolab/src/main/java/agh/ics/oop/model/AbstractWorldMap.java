@@ -47,11 +47,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public void move(Animal animal, MoveDirection direction) throws PositionAlreadyOccupiedException  {
         if (!isOccupied(animal.getPosition())) throw new PositionAlreadyOccupiedException(animal.getPosition());
-
+        Vector2d from = animal.getPosition();
         animals.remove(animal.getPosition());
         animal.move(direction, this);
         animals.put(animal.getPosition(), animal);
-        mapChanged("Animal moved to position: " + animal.getPosition());
+        mapChanged("Animal moved from " + from + " to "  + animal.getPosition());
     }
 
     @Override
