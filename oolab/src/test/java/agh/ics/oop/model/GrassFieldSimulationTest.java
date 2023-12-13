@@ -17,7 +17,7 @@ public class GrassFieldSimulationTest {
 
         Simulation simulation = new Simulation(positions,moves,new GrassField(20));
         simulation.run();
-        String x= simulation.toString();
+
         int result=0;
         for(char c : simulation.toString().toCharArray()) {
             if(c=='*') result++;

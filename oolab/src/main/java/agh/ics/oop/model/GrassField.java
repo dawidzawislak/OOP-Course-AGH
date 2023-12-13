@@ -48,7 +48,7 @@ public class GrassField extends AbstractWorldMap {
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return (0 <= position.getX() && 0 <= position.getY()) && !animals.containsKey(position);
+        return !animals.containsKey(position);
     }
 
     @Override
