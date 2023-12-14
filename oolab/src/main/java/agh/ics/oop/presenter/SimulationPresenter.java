@@ -119,8 +119,7 @@ public class SimulationPresenter implements MapChangeListener {
     }
 
     public void onNewSimulationClicked(ActionEvent actionEvent) {
-        SimulationApp app = new SimulationApp();
-        app.setArgs(movesTBox.getText());
+        SimulationApp app = new SimulationApp(movesTBox.getText());
         Thread appThread = new Thread(app);
         app.run();
     }

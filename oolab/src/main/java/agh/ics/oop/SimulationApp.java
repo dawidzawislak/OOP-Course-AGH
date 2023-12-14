@@ -12,7 +12,14 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SimulationApp extends Application implements Runnable {
-    String args = "";
+    String args;
+
+    public SimulationApp() {
+        args = "";
+    }
+    public SimulationApp(String params) {
+        args = params;
+    }
 
     private void configureStage(Stage primaryStage, VBox viewRoot) {
         var scene = new Scene(viewRoot);
@@ -52,9 +59,5 @@ public class SimulationApp extends Application implements Runnable {
     @Override
     public void run() {
         start(new Stage());
-    }
-
-    public void setArgs(String args) {
-        this.args = args;
     }
 }
