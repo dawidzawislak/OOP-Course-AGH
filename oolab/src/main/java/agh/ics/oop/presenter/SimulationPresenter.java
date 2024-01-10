@@ -18,7 +18,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 
+import javax.swing.text.html.Option;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -68,9 +71,8 @@ public class SimulationPresenter implements MapChangeListener {
                     grid.getRowConstraints().add(new RowConstraints(CELL));
                 }
                 else {
-                    Object object = worldMap.objectAt(new Vector2d(i+worldMap.getCurrentBounds().lowerLeft().getX()-1, worldMap.getCurrentBounds().upperRight().getY()-j+1));
-                    if (object != null)
-                        label.setText(object.toString());
+                    Optional<WorldElement> object = worldMap.objectAt(new Vector2d(i+worldMap.getCurrentBounds().lowerLeft().getX()-1, worldMap.getCurrentBounds().upperRight().getY()-j+1));
+                    object.ifPresent(elem -> label.setText(elem.toString()));
                 }
                 grid.add(label, i, j);
                 GridPane.setHalignment(label, HPos.CENTER);
@@ -113,6 +115,8 @@ public class SimulationPresenter implements MapChangeListener {
         grid.getRowConstraints().add(new RowConstraints(CELL));
 
         grassField.addListener(this);
+        String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new java.util.Date());
+        grassField.addListener((worldMap, mes) -> System.out.println(timeStamp + " | " + worldMap.getId() + ": " + mes));
         Simulation simulation = new Simulation(positions, directions, grassField);
         SimulationEngine simulationEngine = new SimulationEngine(List.of(simulation));
         simulationEngine.runAsync();

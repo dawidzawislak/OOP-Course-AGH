@@ -3,10 +3,8 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 import agh.ics.oop.model.util.PositionAlreadyOccupiedException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final HashMap<Vector2d, Animal> animals;
@@ -56,12 +54,22 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        return animals.containsKey(position);
+        return objectAt(position).isPresent();
     }
 
     @Override
     public String toString() {
         return mapVisualizer.draw(getCurrentBounds().lowerLeft(), getCurrentBounds().upperRight());
+    }
+
+    @Override
+    public Optional<WorldElement> objectAt(Vector2d position) {
+        return Optional.ofNullable(animals.get(position));
+    }
+
+    public List<WorldElement> getOrderedAnimals() {
+        return animals.values().stream().sorted(Comparator.comparingInt((WorldElement a) -> a.getPosition().getX()).
+                thenComparingInt(a -> a.getPosition().getY())).collect(Collectors.toList());
     }
 
     @Override

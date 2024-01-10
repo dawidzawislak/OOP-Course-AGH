@@ -132,7 +132,7 @@ public class GrassFieldSimulationTest {
         simulation.run();
 
         for(WorldElement worldElement: map.getElements()) {
-            if(worldElement.getPosition().equals(new Vector2d(1,1)))
+            if(worldElement instanceof Animal && worldElement.getPosition().equals(new Vector2d(1,1)))
                 assertEquals("^", worldElement.toString());
             if(worldElement.getPosition().equals(new Vector2d(1,2)))
                 assertEquals("v", worldElement.toString());

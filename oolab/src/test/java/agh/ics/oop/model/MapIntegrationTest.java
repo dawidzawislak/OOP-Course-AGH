@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,11 +56,12 @@ public class MapIntegrationTest {
             res2 = false;
         }
 
-        WorldElement placedAnimal = map.objectAt(new Vector2d(2, 2));
+        Optional<WorldElement> placedAnimal = map.objectAt(new Vector2d(2, 2));
 
         assertTrue(res1);
         assertFalse(res2);
-        assertEquals(animal1, placedAnimal);
+        assertTrue(placedAnimal.isPresent());
+        assertEquals(animal1, placedAnimal.get());
     }
 
     @Test
@@ -147,8 +149,9 @@ public class MapIntegrationTest {
         catch(PositionAlreadyOccupiedException e) {
             System.out.println(e.getMessage());
         }
-
-        assertEquals(animal, map.objectAt(new Vector2d(2, 4)));
+        Optional<WorldElement> elem = map.objectAt(new Vector2d(2, 4));
+        assertTrue(elem.isPresent());
+        assertEquals(animal, elem.get());
         assertEquals(new Vector2d(2, 4), animal.getPosition());
     }
 
