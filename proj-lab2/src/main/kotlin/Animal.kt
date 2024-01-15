@@ -19,8 +19,4 @@ class Animal(var position: Vector2d, private var orientation: MapDirection = Map
 
         if (newPosition !== position && (newPosition.x in 0..4 && newPosition.y in 0..4))  position = newPosition
     }
-
-    fun setPosition(pos: Vector2d) {
-        position = pos
-    }
 }
